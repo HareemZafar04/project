@@ -4,10 +4,53 @@
 
 :root {
   color-scheme: light;
+  --color-ink: 27 36 32;
+  --color-ink-soft: 44 54 47;
+  --color-paper: 245 242 233;
+  --color-paper-dim: 237 232 218;
+  --color-sage: 143 160 132;
+  --color-sage-light: 199 208 188;
+  --color-sage-dark: 95 112 86;
+  --color-blush: 217 191 180;
+  --color-blush-light: 237 225 218;
+  --color-blush-dark: 185 148 133;
+  --color-brass: 156 122 69;
+  --color-brass-light: 199 168 118;
+  --color-wine: 74 31 31;
+}
+
+.dark {
+  color-scheme: dark;
+  --color-ink: 240 237 228;
+  --color-ink-soft: 210 207 196;
+  --color-paper: 18 24 21;
+  --color-paper-dim: 27 34 30;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Lenis handles scroll smoothing via rAF; disable native smooth-scroll
+   double-application once Lenis is active (class added by SmoothScrollProvider) */
+html.lenis {
+  scroll-behavior: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* hide native cursor for fine-pointer devices once custom cursor is active */
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -25,13 +68,14 @@ html {
 }
 
 body {
-  background-color: #F5F2E9;
-  color: #1B2420;
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 ::selection {
-  background-color: #D9BFB4;
-  color: #1B2420;
+  background-color: rgb(var(--color-blush));
+  color: rgb(var(--color-ink));
 }
 
 /* thin, quiet scrollbar */
@@ -39,12 +83,54 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #F5F2E9;
+  background: rgb(var(--color-paper));
 }
 ::-webkit-scrollbar-thumb {
-  background: #C7A876;
+  background: rgb(var(--color-brass));
   border-radius: 999px;
-  border: 2.5px solid #F5F2E9;
+  border: 2.5px solid rgb(var(--color-paper));
+}
+
+/* Scroll progress bar */
+.scroll-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  transform-origin: 0% 50%;
+}
+
+/* Custom cursor */
+.custom-cursor-dot,
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 70;
+  will-change: transform;
+}
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(var(--color-brass));
+}
+.custom-cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--color-ink) / 0.4);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+.custom-cursor-ring.is-active {
+  width: 64px;
+  height: 64px;
+  background: rgb(var(--color-brass) / 0.12);
+  border-color: rgb(var(--color-brass) / 0.6);
 }
 
 .container-edit {
@@ -76,27 +162,52 @@ body {
 
 .hairline {
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(156, 122, 69, 0.5), transparent);
+  background: linear-gradient(to right, transparent, rgb(var(--color-brass) / 0.5), transparent);
 }
 
 .glass {
-  background: rgba(245, 242, 233, 0.55);
+  background: rgb(var(--color-paper) / 0.55);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgb(var(--color-ink) / 0.08);
 }
 
 .text-stroke-ink {
-  -webkit-text-stroke: 1px #1B2420;
+  -webkit-text-stroke: 1px rgb(var(--color-ink));
   color: transparent;
 }
 
 /* focus visibility for keyboard users */
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #9C7A45;
+  outline: 2px solid rgb(var(--color-brass));
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Loading screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(var(--color-paper));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Floating ambient petal */
+.floating-petal {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0.5;
+}
+
+/* 3D tilt card perspective container */
+.tilt-perspective {
+  perspective: 1200px;
 }
 
 .font-display-italic {

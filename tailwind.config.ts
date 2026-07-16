@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss";
 
+const withOpacity = (variable: string) => `rgb(var(${variable}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -9,29 +12,29 @@ const config: Config = {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#1B2420",
-          soft: "#2C362F",
+          DEFAULT: withOpacity("--color-ink"),
+          soft: withOpacity("--color-ink-soft"),
         },
         paper: {
-          DEFAULT: "#F5F2E9",
-          dim: "#EDE8DA",
+          DEFAULT: withOpacity("--color-paper"),
+          dim: withOpacity("--color-paper-dim"),
         },
         sage: {
-          DEFAULT: "#8FA084",
-          light: "#C7D0BC",
-          dark: "#5F7056",
+          DEFAULT: withOpacity("--color-sage"),
+          light: withOpacity("--color-sage-light"),
+          dark: withOpacity("--color-sage-dark"),
         },
         blush: {
-          DEFAULT: "#D9BFB4",
-          light: "#EDE1DA",
-          dark: "#B99485",
+          DEFAULT: withOpacity("--color-blush"),
+          light: withOpacity("--color-blush-light"),
+          dark: withOpacity("--color-blush-dark"),
         },
         brass: {
-          DEFAULT: "#9C7A45",
-          light: "#C7A876",
+          DEFAULT: withOpacity("--color-brass"),
+          light: withOpacity("--color-brass-light"),
         },
         wine: {
-          DEFAULT: "#4A1F1F",
+          DEFAULT: withOpacity("--color-wine"),
         },
       },
       fontFamily: {
