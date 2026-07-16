@@ -24,7 +24,11 @@ const instrument = Instrument_Sans({
   display: "swap",
 });
 
-const SITE_URL = "https://amarante-florals.example.com";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
 const SITE_TITLE = "Maison Amarante — Atelier Floral";
 const SITE_DESCRIPTION =
   "Maison Amarante is an atelier of considered flowers — sculptural arrangements, seasonal editions, and bespoke florals for the moments that ask for more.";
