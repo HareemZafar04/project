@@ -9,6 +9,7 @@ type Props = {
   href?: string;
   onClick?: () => void;
   strength?: number;
+  [key: `data-${string}`]: string | boolean | undefined;
 };
 
 export function MagneticButton({
@@ -17,6 +18,7 @@ export function MagneticButton({
   href,
   onClick,
   strength = 18,
+  ...rest
 }: Props) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -46,6 +48,7 @@ export function MagneticButton({
       onMouseLeave={handleMouseLeave}
       style={{ x: springX, y: springY }}
       className={className}
+      {...rest}
     >
       {children}
     </Component>

@@ -1,27 +1,25 @@
-import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { Manifesto } from "@/components/Manifesto";
 import { Collections } from "@/components/Collections";
+import { Gallery } from "@/components/Gallery";
 import { Process } from "@/components/Process";
+import { Testimonials } from "@/components/Testimonials";
 import { Editorial } from "@/components/Editorial";
 import { Bespoke } from "@/components/Bespoke";
 import { Journal } from "@/components/Journal";
-import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Manifesto />
-        <Collections />
-        <Process />
-        <Editorial />
-        <Bespoke />
-        <Journal />
-      </main>
-      <Footer />
+      <Hero />
+      <Manifesto />
+      <Collections />
+      <Gallery />
+      <Process />
+      <Testimonials />
+      <Editorial />
+      <Bespoke />
+      <Journal />
     </>
   );
 }

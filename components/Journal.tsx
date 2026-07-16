@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { journal } from "@/lib/data";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -8,20 +9,27 @@ export function Journal() {
     <section id="journal" className="relative bg-paper py-28 md:py-36">
       <div className="container-edit">
         <Reveal>
-          <div className="flex items-end justify-between mb-16 md:mb-20">
+          <div className="flex items-end justify-between mb-16 md:mb-20 gap-6">
             <div>
               <p className="eyebrow text-brass mb-4">No. 05 — The Journal</p>
               <h2 className="font-display text-4xl md:text-6xl text-ink leading-[1.02]">
                 Notes from the atelier.
               </h2>
             </div>
+            <Link
+              href="/journal"
+              data-cursor-hover
+              className="hidden sm:inline-flex eyebrow text-ink/70 hover:text-ink items-center gap-2 whitespace-nowrap"
+            >
+              View all notes <span aria-hidden>→</span>
+            </Link>
           </div>
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
           {journal.map((post, i) => (
             <Reveal key={post.id} delay={i * 0.1}>
-              <a href="#" className="group block">
+              <Link href={`/journal/${post.slug}`} data-cursor-hover className="group block">
                 <div className="hairline mb-6" />
                 <div className="flex items-center justify-between mb-4">
                   <span className="eyebrow text-sage-dark">{post.tag}</span>
@@ -36,7 +44,7 @@ export function Journal() {
                 <span className="eyebrow text-ink/70 inline-flex items-center gap-2 group-hover:gap-3 transition-all">
                   Read the note <span aria-hidden>→</span>
                 </span>
-              </a>
+              </Link>
             </Reveal>
           ))}
         </div>

@@ -3,6 +3,32 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { nav } from "@/lib/data";
+import { useTheme } from "@/lib/providers/ThemeProvider";
+
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  return (
+    <button
+      onClick={toggle}
+      data-cursor-hover
+      aria-label="Toggle dark mode"
+      className="relative w-9 h-9 flex items-center justify-center rounded-full text-ink/70 hover:text-ink transition-colors"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={theme}
+          initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+          animate={{ opacity: 1, rotate: 0, scale: 1 }}
+          exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+          transition={{ duration: 0.3 }}
+          className="text-base leading-none"
+        >
+          {theme === "dark" ? "☾" : "☀"}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -29,7 +55,8 @@ export function Navbar() {
         }`}
       >
         <a
-          href="#top"
+          href="/"
+          data-cursor-hover
           className="font-display italic text-lg md:text-xl tracking-tight text-ink whitespace-nowrap"
         >
           Amarante
@@ -40,6 +67,7 @@ export function Navbar() {
             <a
               key={item.href}
               href={item.href}
+              data-cursor-hover
               className="eyebrow text-ink/70 hover:text-ink transition-colors"
             >
               {item.label}
@@ -47,21 +75,25 @@ export function Navbar() {
           ))}
         </div>
 
-        <a
-          href="#bespoke"
-          className="hidden md:inline-flex items-center rounded-full bg-ink text-paper eyebrow px-5 py-2.5 hover:bg-ink-soft transition-colors"
-        >
-          Enquire
-        </a>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <a
+            href="/#bespoke"
+            data-cursor-hover
+            className="hidden md:inline-flex items-center rounded-full bg-ink text-paper eyebrow px-5 py-2.5 hover:bg-ink-soft transition-colors"
+          >
+            Enquire
+          </a>
 
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((o) => !o)}
-          className="md:hidden flex flex-col gap-1.5 p-1"
-        >
-          <span className="block w-5 h-px bg-ink" />
-          <span className="block w-5 h-px bg-ink" />
-        </button>
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((o) => !o)}
+            className="md:hidden flex flex-col gap-1.5 p-1"
+          >
+            <span className="block w-5 h-px bg-ink" />
+            <span className="block w-5 h-px bg-ink" />
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -84,7 +116,7 @@ export function Navbar() {
               </a>
             ))}
             <a
-              href="#bespoke"
+              href="/#bespoke"
               onClick={() => setOpen(false)}
               className="eyebrow text-paper bg-ink rounded-full px-5 py-3 text-center"
             >
